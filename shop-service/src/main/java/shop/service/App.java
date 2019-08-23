@@ -1,4 +1,4 @@
-package shop.model;
+package shop.service;
 
 /**
  * Hello world!
