@@ -1,4 +1,4 @@
-package shop.service;
+package shop.orm;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
