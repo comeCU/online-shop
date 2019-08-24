@@ -28,6 +28,7 @@
 		<module>shop-dao</module>
 		<module>shop-web</module>
     	<module>shop-service</module>
+    	<module>shop-orm</module>
   </modules>
 
 	<dependencyManagement>

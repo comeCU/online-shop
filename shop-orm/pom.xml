@@ -10,26 +10,16 @@
 	</parent>
 
 	<groupId>com.dong</groupId>
-	<artifactId>shop-model</artifactId>
+	<artifactId>shop-orm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>shop-model</name>
+	<name>shop-orm</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
 	<dependencies>
-		<!-- A依赖B，B又依赖A，将会形成循环依赖。解决方法：将相互依赖的部分抽离为C模块，A，B依赖C -->
-		<!-- <dependency> <groupId>com.dong</groupId> <artifactId>shop-dao</artifactId> 
-			<version>0.0.1-SNAPSHOT</version> </dependency> -->
-		<dependency>
-			<groupId>com.dong</groupId>
-			<artifactId>shop-orm</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -38,6 +28,5 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-
 	</dependencies>
 </project>
