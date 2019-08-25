@@ -1,6 +1,9 @@
 package shop.dao;
 
 import java.util.List;
+
+import shop.model.Book;
+import shop.model.PageBean;
 /**
  * 图书dao层接口
  * @author dong
@@ -12,7 +15,7 @@ public interface BookDao {
      * @param sql
      * @return
      */
-    public List query(String sql);
+    public PageBean<Book> query(int pc, int pr);
     /**
      * 查询书籍总数
      * @return
