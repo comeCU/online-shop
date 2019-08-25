@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 
         if (flag) {
             request.getSession().setAttribute("loginuser", username);
-            response.sendRedirect("SearchServlet"); // 首页直接显示
+            response.sendRedirect("SearchServlet?method=findAll"); // 首页直接显示 method=findAll需要带参数
         } else {  // 登录失败
             response.setContentType("text/html;charset=utf-8");
             PrintWriter out = response.getWriter();

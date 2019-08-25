@@ -40,17 +40,7 @@ function checkSel() {
 	if(username == null) {
 		response.sendRedirect("login.jsp");
 	}	
-	
-	int no = 0;
-	int totalPage = 0;
-	List books = (List)request.getAttribute("books");
-	if(request.getAttribute("current") != null) {
-		no = (Integer)request.getAttribute("current");//获取当前页面数
-		totalPage = (Integer)request.getAttribute("totalPage");//获取总页面数
-	}
 %>
-
-
 <!-- 引入 -->
 <jsp:include page="main_head.jsp"></jsp:include>
 
@@ -66,42 +56,65 @@ function checkSel() {
 					<th class="view">图片预览</th>
 				</tr>
 				
-				<c:forEach var="book" items="${books }">
+				<c:forEach var="book" items="${pb.beanList}">
 					<tr>
 						<td><input type="checkbox" name="bookId" value="${book.bid }" /></td>
 						<td class="title">${book.bookname }</td>
 						<input type="hidden" name="title" value = "${book.bid }:${book.bookname}"/>
-						<td>￥${book.b_price }</td>
-						<input type="hidden" name="price" value = "${book.bid }:${book.b_price}"/> <!-- b_price跟数据库字段名相对应 -->
+						<td>￥${book.price }</td>
+						<input type="hidden" name="price" value = "${book.bid }:${book.price}"/> <!-- b_price跟数据库字段名相对应 -->
 						<td>${book.stock }</td>
 						<input type="hidden" name="stock" value = "${book.bid }:${book.stock}"/>
 						<td class="thumb"><img src="${book.image }" /></td>
 						<input type="hidden" name="image" value = "${book.bid }:${book.image}"/>
 					</tr>
 				</c:forEach>	
-				
 			</table>
-			<%-- <%out.println(request.getAttribute("current")); %> --%>
-			<!--分页开始-->
-			<%if(request.getAttribute("current") != null) { %>
-			
-			<div class="page-spliter">
-				<a href="SearchServlet">首页</a>
-				<%for(int i = 1; i <= totalPage; i++) { %>
-					<%if(i==no) { %>	<!-- 如果不是当前页显示为链接 -->
-							<span class="current"><%=i %></span>
-							<%continue;} %>
-						<a href="SearchServlet?currentPage=<%=i %>"><%=i %></a>
-				<%} %>
-				<a href="SearchServlet?currentPage=<%=totalPage %>">尾页</a>
-			</div>
-			
-			<%} %>
-			<!--分页结束-->
-			<div class="button"><input class="input-btn" type="submit" name="submit" value="" onclick="return checkSel()"/></div>
-		</form>
-	</div>
-</div><!--中间内容结束-->
+<center>
+    第${pb.pc}页/共${pb.tp}页
+    <a href="${pb.url}&pc=1">首页</a>
+    <c:if test="${pb.pc>1}">
+        <a href="${pb.url}&pc=${pb.pc-1}">上一页</a>
+    </c:if>
+
+    <c:choose>
+        <c:when test="${pb.tp<=10}">
+            <c:set var="begin" value="1"/>
+            <c:set var="end" value="${pb.tp}"/>
+        </c:when>
+        <c:otherwise>
+            <c:set var="begin" value="${pb.pc-5}"/>
+            <c:set var="end" value="${pb.pc+4}"/>
+            <%--头溢出--%>
+            <c:if test="${begin<1}">
+                <c:set var="begin" value="1"/>
+                <c:set var="end" value="10"/>
+            </c:if>
+            <%--尾溢出--%>
+            <c:if test="${end>pb.tp}">
+                <c:set var="end" value="${pb.tp}"/>
+                <c:set var="begin" value="${pb.tp-9}"/>
+            </c:if>
+        </c:otherwise>
+    </c:choose>
+    <%--循环遍历页码列表--%>
+    <c:forEach var="i" begin="${begin}" end="${end}">
+        <c:choose>
+            <c:when test="${i eq pb.pc}">
+                [${i}]
+            </c:when>
+            <c:otherwise>
+                <a href="${pb.url}&pc=${i}">[${i}]</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+
+    <c:if test="${pb.pc<pb.tp}">
+    <a href="${pb.url}&pc=${pb.pc+1}">下一页</a>
+    </c:if>
+    <a href="${pb.url}&pc=${pb.tp}">尾页</a>
+
+</center>
 
 <div id="footer" class="wrap">
 	网上书城 &copy; 版权所有
