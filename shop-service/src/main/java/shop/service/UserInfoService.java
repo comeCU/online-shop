@@ -1,4 +1,7 @@
 package shop.service;
+
+import shop.model.UserInfo;
+
 /**
  * UserInfo service层接口
  * @author dong
@@ -12,5 +15,18 @@ public interface UserInfoService {
      * @return 存在该用户返回true，否则返回false
      */
     public boolean checkLogin(String username,String password);
-
+    
+    /**
+     * 添加用户
+     * @param userInfo
+     * @return 添加成功返回true，否则返回false
+     */
+    public boolean addUser(UserInfo userInfo);
+    
+    /**
+     * 判断用户是否已经存在
+     * @param username
+     * @return
+     */
+    public boolean userExist(String username);
 }

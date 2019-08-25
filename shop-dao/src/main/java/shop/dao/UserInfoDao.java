@@ -13,11 +13,12 @@ public interface UserInfoDao {
      * @param sql
      * @return
      */
-    public List<UserInfo> query(String sql);
+    public List<UserInfo> query(String sql, String[] colums);
     /**
      * 插入
      * @param userinfo
      * @return
      */
     public int insert(UserInfo userinfo);
+
 }
