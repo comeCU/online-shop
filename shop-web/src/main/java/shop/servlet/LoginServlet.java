@@ -11,7 +11,9 @@ import shop.service.UserInfoService;
 import shop.service.impl.UserInfoServiceImpl;
 
 /**
- * Servlet implementation class LoginServlet
+ * 用户登录
+ * @author dong
+ * @date Aug 25, 2019 10:30:17 AM
  */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -32,14 +34,9 @@ public class LoginServlet extends HttpServlet {
         boolean flag = userInfoService.checkLogin(username, password);
 
         if (flag) {
-            /*
-             * request.getSession().setAttribute("loginuser", username);
-             * response.sendRedirect("SearchServlet");
-             */
-            // 首页直接显示
-
-            System.out.println("测试用户登录。。。");
-        } else {// 登录失败
+            request.getSession().setAttribute("loginuser", username);
+            response.sendRedirect("SearchServlet"); // 首页直接显示
+        } else {  // 登录失败
             response.setContentType("text/html;charset=utf-8");
             PrintWriter out = response.getWriter();
             out.println("<script type='text/javascript'>");

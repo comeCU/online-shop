@@ -30,9 +30,10 @@ public interface DbDao {
     /**
      * 将一个对象保存到数据库中
      * @param obj
-     * @throws MyException 
+     * @return 如果isGenerateKey为true，返回自增长主键的当前值，false，则返回受影响行数
+     * @throws MyException
      */
-    public void save(Object obj) throws MyException;
+    public Long save(Object obj) throws MyException;
     
     /**
      * 根据传入的对象更新一条数据库记录，必须含有主键所对应的属性值

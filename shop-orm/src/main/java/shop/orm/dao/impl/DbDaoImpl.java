@@ -95,7 +95,7 @@ public class DbDaoImpl implements DbDao {
     }
 
     @Override
-    public void save(Object obj) throws MyException {
+    public Long save(Object obj) throws MyException {
         // insert into t_student(stu_name, stu_no, stu_age) values(?,?,?)
         // 1.获取参数对应类的字节码
         Class clazz = obj.getClass();
@@ -103,6 +103,7 @@ public class DbDaoImpl implements DbDao {
         Field fieldKey = null; // 保存主键的值，后面需要设值
 
         boolean isGenerator = false; // 标志是否为自增主键
+        Long key = 0L;  // 如果isGenerateKey为true，返回自增长主键的当前值，false，则返回受影响行数
 
         // 2.创建StringBuffer拼接 sql，分3段：字段名与 ？号对应拼接，注意末尾去除 ,号 和 )号
         StringBuffer sqlHead = new StringBuffer("insert into ");
@@ -171,9 +172,9 @@ public class DbDaoImpl implements DbDao {
             System.out.println("输出整条sql：" + sqlHead);
             System.out.println("sql中的参数：" + params.toString());
 
-            // 4. 执行sql，如果主键
+            // 4. 执行sql
             if (isGenerator) { // 如果主键是自增的，按如下方式执行
-                Long key = executeSql(sqlHead.toString(), params.toArray(), true);
+                key = executeSql(sqlHead.toString(), params.toArray(), true);
 
                 if (fieldKey != null) {
                     fieldKey.setAccessible(true);
@@ -191,12 +192,14 @@ public class DbDaoImpl implements DbDao {
                 }
 
             } else {
-                executeSql(sqlHead.toString(), params.toArray(), false);
+                key = executeSql(sqlHead.toString(), params.toArray(), false);
             }
 
         } else { // 如果调用者 在entity类中没有写 @MyTable(tableName = "t_person")注解将执行如下代码
             throw new MyException(-1, "表不存在！");
         }
+        
+        return key;
     }
 
     @Override

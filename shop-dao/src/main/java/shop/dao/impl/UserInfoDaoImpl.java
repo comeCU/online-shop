@@ -11,19 +11,23 @@ import shop.model.UserInfo;
  */
 import shop.orm.dao.DbDao;
 import shop.orm.dao.impl.DbDaoImpl;
+import shop.orm.exception.MyException;
 public class UserInfoDaoImpl implements UserInfoDao {
     DbDao dbDao = new DbDaoImpl();
 
     @Override
-    public List<UserInfo> query(String sql) {
-        String[] colums = {"username","password","email"};
-        
+    public List<UserInfo> query(String sql, String[] colums) {
         return dbDao.query(sql, colums);
     }
 
     @Override
     public int insert(UserInfo userinfo) {
-        // TODO Auto-generated method stub
+        try {
+            return dbDao.save(userinfo).intValue();
+        } catch (MyException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return 0;
     }
 
